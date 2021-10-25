@@ -3,7 +3,7 @@ import { professions } from "./professions.api";
 const qualities = {
     tedious: {
         _id: "67rdca3eeb7f6fgeed471198",
-        name: "Нудила",
+        name: "Зануда",
         color: "primary"
     },
     strange: {
