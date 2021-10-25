@@ -52,13 +52,13 @@ const User = ({
 User.propTypes = {
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    profession: PropTypes.string.isRequired,
-    qualities: PropTypes.string.isRequired,
-    completedMeetings: PropTypes.string.isRequired,
-    rate: PropTypes.string.isRequired,
+    profession: PropTypes.object.isRequired,
+    qualities: PropTypes.array,
+    completedMeetings: PropTypes.number.isRequired,
+    rate: PropTypes.number.isRequired,
     onDelete: PropTypes.func.isRequired,
     onToggleBookmark: PropTypes.func.isRequired,
-    marked: PropTypes.bool.isRequired
+    marked: PropTypes.bool
 };
 
 export default User;
