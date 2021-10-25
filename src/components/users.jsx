@@ -11,11 +11,15 @@ const Users = ({ users: allUsers, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState(api.professions.fetchAll());
     const [selectedProf, setSelectedProf] = useState();
-
-    const pageSize = 2;
+    // const [selectedUsers, setSelectedUsers] = useState();
+    const pageSize = 6;
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfession(data));
     }, []);
+
+    // useEffect(() => {
+    //     api.users.fetchAll().then((data) => setSelectedUsers(data));
+    // }, []);
 
     useEffect(() => {
         setCurrentPage(1);
@@ -30,7 +34,7 @@ const Users = ({ users: allUsers, ...rest }) => {
     };
 
     const filteredUsers = selectedProf
-        ? allUsers.filter((user) => user.profession === selectedProf)
+        ? allUsers.filter((user) => user.profession._id === selectedProf._id)
         : allUsers;
 
     const count = filteredUsers.length;

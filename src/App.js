@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Users from "../src/components/users";
 import api from "./api";
 
 function App() {
-    const [users, setUsers] = useState(api.users.fetchAll());
+    const [users, setUsers] = useState([]);
+    console.log(users);
+    useEffect(() => {
+        api.users.fetchAll().then((data) => setUsers(data));
+    }, []);
 
     const handleDelete = (userId) => {
         setUsers((users) => {
@@ -11,9 +15,7 @@ function App() {
         });
     };
 
-    const handleToggleBookmark = (userId, marked) => {
-        // marked = !marked;
-
+    const handleToggleBookmark = (userId) => {
         const updatedBookmark = users.map((item) => {
             if (item._id === userId) {
                 item.marked = !item.marked;
