@@ -11,15 +11,11 @@ const Users = ({ users: allUsers, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState(api.professions.fetchAll());
     const [selectedProf, setSelectedProf] = useState();
-    // const [selectedUsers, setSelectedUsers] = useState();
+
     const pageSize = 6;
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfession(data));
     }, []);
-
-    // useEffect(() => {
-    //     api.users.fetchAll().then((data) => setSelectedUsers(data));
-    // }, []);
 
     useEffect(() => {
         setCurrentPage(1);
@@ -42,6 +38,7 @@ const Users = ({ users: allUsers, ...rest }) => {
 
     const clearFilter = () => {
         setSelectedProf();
+        console.log(typeof professions);
     };
 
     return (
