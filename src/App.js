@@ -1,38 +1,25 @@
-import React, { useState, useEffect } from "react";
-import Users from "../src/components/users";
-import api from "./api";
+import React from "react";
+import { Route, Switch } from "react-router";
+// import Users from "../src/components/users";
+import NavBar from "./components/navBar";
+import LoginPage from "./layout/loginPage";
+import MainPage from "./layout/MainPage";
+import UserListPage from "./layout/userListPage";
+// import UserSinglePage from "./layout/userSinglePage";
+// import UserSinglePage from "./layout/userSinglePage";
+// import api from "./api";
 
 function App() {
-    const [users, setUsers] = useState([]);
-    useEffect(() => {
-        api.users.fetchAll().then((data) => setUsers(data));
-    }, []);
-
-    const handleDelete = (userId) => {
-        setUsers((users) => {
-            return (users = users.filter((user) => user._id !== userId));
-        });
-    };
-
-    const handleToggleBookmark = (userId) => {
-        const updatedBookmark = users.map((item) => {
-            if (item._id === userId) {
-                item.marked = !item.marked;
-            }
-            return item;
-        });
-
-        setUsers(updatedBookmark);
-    };
-
     return (
         <div>
-            <Users
-                onDelete={handleDelete}
-                onToggleBookmark={handleToggleBookmark}
-                users={users}
-                length={users.length}
-            />
+            <NavBar />
+            <Switch>
+                <Route path="/" exact component={MainPage} />
+                <Route path="/login" component={LoginPage} />
+                <Route path="/users/:userId?" component={UserListPage} />
+            </Switch>
+
+            {/* <Users /> */}
         </div>
     );
 }

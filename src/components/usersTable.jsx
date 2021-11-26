@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TableHeader from "./tableHeader";
-import TableBody from "./tableBody";
+// import TableHeader from "./tableHeader";
+// import TableBody from "./tableBody";
 import Bookmark from "./bookmark";
+import QualitiesList from "./qualitiesList";
+import Table from "./table";
+import { Link } from "react-router-dom";
 
 const UsersTable = ({
     users,
@@ -13,8 +16,17 @@ const UsersTable = ({
     ...rest
 }) => {
     const columns = {
-        name: { path: "name", name: "Имя" },
-        qualities: { name: "Качества" },
+        name: {
+            path: "name",
+            name: "Имя",
+            component: (user) => (
+                <Link to={`/users/${user._id}`}>{user.name}</Link>
+            )
+        },
+        qualities: {
+            name: "Качества",
+            component: (user) => <QualitiesList qualities={user.qualities} />
+        },
         profession: { path: "profession.name", name: "Профессия" },
         completedMeetings: {
             path: "completedMeetings",
@@ -22,12 +34,11 @@ const UsersTable = ({
         },
         rate: { path: "rate", name: "Оценка" },
         bookmark: {
-            path: "bookmark",
+            path: "marked",
             name: "Избранное",
             component: (user) => (
                 <Bookmark
                     onClick={() => onToggleBookmark(user._id)}
-                    // _id={_id} //onToggleBookmark={onToggleBookmark}
                     marked={user.marked}
                 />
             )
@@ -45,21 +56,21 @@ const UsersTable = ({
     };
 
     return (
-        <table className="table">
-            <TableHeader {...{ onSort, selectedSort, columns }} />
-            <TableBody {...{ columns, data: users }} />
-            {/* <tbody>
-                {users.map((user) => (
-                    <User
-                        {...rest}
-                        key={user._id}
-                        // onDelete={onDelete}
-                        // onToggleBookmark={onToggleBookmark}
-                        {...user}
-                    />
-                ))}
-            </tbody> */}
-        </table>
+        <Table
+            onSort={onSort}
+            selectedSort={selectedSort}
+            columns={columns}
+            data={users}
+        />
+        // <Table
+        //     onSort={onSort}
+        //     selectedSort={selectedSort}
+        //     columns={columns}
+        //     data={users}
+        // >
+        //     <TableHeader {...{ onSort, selectedSort, columns }} />
+        //     <TableBody {...{ columns, data: users }} />
+        // </Table>
     );
 };
 
