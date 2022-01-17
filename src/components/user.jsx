@@ -15,7 +15,7 @@ const User = ({
     marked = false
 }) => {
     return (
-        <tr>
+        <tr key={_id}>
             <td>{name}</td>
             <td>
                 {qualities.map((quality) => (

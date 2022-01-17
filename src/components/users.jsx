@@ -7,15 +7,18 @@ import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UsersTable from "./usersTable";
 import _ from "lodash";
+import Search from "./search";
 
 const Users = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState(api.professions.fetchAll());
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
+    const [query, setQuery] = useState("");
+    const [users, setUsers] = useState([]);
+
     const pageSize = 6;
 
-    const [users, setUsers] = useState([]);
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
     }, []);
@@ -43,9 +46,10 @@ const Users = () => {
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [selectedProf]);
+    }, [selectedProf, query]);
 
     const handleProfessionSelect = (item) => {
+        setQuery("");
         setSelectedProf(item);
     };
 
@@ -56,8 +60,20 @@ const Users = () => {
     const handleSort = (item) => {
         setSortBy(item);
     };
+
+    const handleSearch = (event) => {
+        const searchItems = event.target.value;
+        setQuery(searchItems);
+        setSelectedProf();
+    };
     if (users) {
-        const filteredUsers = selectedProf
+        const filteredUsers = query
+            ? users.filter(
+                  (user) =>
+                      user.name.toLowerCase().indexOf(query.toLowerCase()) !==
+                      -1
+              )
+            : selectedProf
             ? users.filter(
                   (user) =>
                       JSON.stringify(user.profession) ===
@@ -97,14 +113,17 @@ const Users = () => {
                 )}
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
+                    <Search value={query} onChange={handleSearch} />
                     {count > 0 && (
-                        <UsersTable
-                            users={usersCrop}
-                            onSort={handleSort}
-                            selectedSort={sortBy}
-                            onDelete={handleDelete}
-                            onToggleBookmark={handleToggleBookmark}
-                        />
+                        <>
+                            <UsersTable
+                                users={usersCrop}
+                                onSort={handleSort}
+                                selectedSort={sortBy}
+                                onDelete={handleDelete}
+                                onToggleBookmark={handleToggleBookmark}
+                            />
+                        </>
                     )}
                     <div className="d-flex justify-content-center">
                         <Pagination
