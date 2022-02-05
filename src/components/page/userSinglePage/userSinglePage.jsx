@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import api from "../api";
-import QualitiesList from "../components/qualitiesList";
+import api from "../../../api";
+import Qualities from "../../ui/qualities";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import "./userSinglePage.css";
@@ -16,7 +16,7 @@ const UserSinglePage = ({ id }) => {
             <div className="user__block">
                 <h1> {user.name}</h1>
                 <p>Профессия: {user.profession.name}</p>
-                <QualitiesList qualities={user.qualities} />
+                <Qualities qualities={user.qualities} />
                 <p>Completed Meetings: {user.completedMeetings}</p>
                 <h2>Rate: {user.rate}</h2>
                 <Link to="/users" className="btn btn-secondary">

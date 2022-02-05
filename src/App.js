@@ -1,10 +1,9 @@
 import React from "react";
 import { Route, Switch } from "react-router";
-// import Users from "../src/components/users";
-import NavBar from "./components/navBar";
-import LoginPage from "./layout/loginPage";
-import MainPage from "./layout/MainPage";
-import UserListPage from "./layout/userListPage";
+import NavBar from "./components/ui/navBar";
+import Login from "./layouts/login";
+import MainPage from "./layouts/Main";
+import UserListPage from "./layouts/userList";
 // import UserSinglePage from "./layout/userSinglePage";
 // import UserSinglePage from "./layout/userSinglePage";
 // import api from "./api";
@@ -15,7 +14,7 @@ function App() {
             <NavBar />
             <Switch>
                 <Route path="/" exact component={MainPage} />
-                <Route path="/login" component={LoginPage} />
+                <Route path="/login/:type?" component={Login} />
                 <Route path="/users/:userId?" component={UserListPage} />
             </Switch>
 
